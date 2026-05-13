@@ -1,10 +1,9 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 from locators.order_status_page_locators import (
     WaitingOrderPageLocators,
     CompletedOrderPageLocators,
 )
+from utils.test_data import EXPECTED_STATUS_TEXT
 
 
 class WaitingOrderPage(BasePage):
@@ -22,11 +21,10 @@ class WaitingOrderPage(BasePage):
         return self.is_visible(WaitingOrderPageLocators.BTN_DETAILS)
 
     def click_details(self):
-        self.find_clickable(WaitingOrderPageLocators.BTN_DETAILS).click()
+        self.click(WaitingOrderPageLocators.BTN_DETAILS)
 
     def click_cancel(self):
-        self.find_clickable(WaitingOrderPageLocators.BTN_CANCEL).click()
-
+        self.click(WaitingOrderPageLocators.BTN_CANCEL)
 
 class CompletedOrderPage(BasePage):
 
@@ -39,15 +37,12 @@ class CompletedOrderPage(BasePage):
     def is_details_button_displayed(self):
         return self.is_visible(CompletedOrderPageLocators.BTN_DETAILS)
 
-    def is_driver_info_displayed(self):
-        return self.is_visible(CompletedOrderPageLocators.DRIVER_NAME)
-
     def click_details(self):
-        self.find_clickable(CompletedOrderPageLocators.BTN_DETAILS).click()
+        self.click(CompletedOrderPageLocators.BTN_DETAILS)
         self.find_visible(CompletedOrderPageLocators.DETAILS_COST)
 
     def click_cancel(self):
-        self.find_clickable(CompletedOrderPageLocators.BTN_CANCEL).click()
+        self.click(CompletedOrderPageLocators.BTN_CANCEL)
 
     def get_details_cost_text(self):
         return self.get_text(CompletedOrderPageLocators.DETAILS_COST)
@@ -56,8 +51,8 @@ class CompletedOrderPage(BasePage):
         return self.is_visible(CompletedOrderPageLocators.DETAILS_COST)
 
     def wait_until_eta_visible(self):
-        WebDriverWait(self.driver, 40).until(
-            EC.text_to_be_present_in_element(
-                CompletedOrderPageLocators.TITLE_ETA, "приедет"
-            )
+        self.wait_text_in_element(
+            CompletedOrderPageLocators.TITLE_ETA,
+            EXPECTED_STATUS_TEXT,
+            timeout=40,
         )

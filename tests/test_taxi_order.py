@@ -1,6 +1,6 @@
 import pytest
 import allure
-import test_data
+from utils import test_data
 
 
 @allure.feature("Заказ тарифа Такси")
@@ -122,9 +122,7 @@ class TestTaxiFullFlow:
             assert waiting_page.is_details_button_displayed()
 
     @allure.title("Полный флоу: окно совершенного заказа после окончания таймера")
-    def test_full_flow_completed_order_window(
-        self, taxi_form_opened, waiting_page, completed_page
-    ):
+    def test_full_flow_completed_order_window(self, taxi_form_opened, completed_page):
         with allure.step("Выбрать тариф Рабочий"):
             taxi_form_opened.select_tariff_worker()
         with allure.step("Включить чекбокс 'Столик для ноутбука'"):
@@ -142,9 +140,7 @@ class TestTaxiFullFlow:
             assert completed_page.is_details_button_displayed()
 
     @allure.title("Полный флоу: в деталях поездки указана стоимость тарифа")
-    def test_full_flow_details_show_cost(
-        self, taxi_form_opened, waiting_page, completed_page
-    ):
+    def test_full_flow_details_show_cost(self, taxi_form_opened, completed_page):
         with allure.step("Выбрать тариф Рабочий"):
             taxi_form_opened.select_tariff_worker()
         with allure.step("Сохранить стоимость выбранного тарифа"):
@@ -163,9 +159,7 @@ class TestTaxiFullFlow:
             assert tariff_price in details_price
 
     @allure.title("Полный флоу: нажатие кнопки Отмена закрывает окно заказа")
-    def test_full_flow_cancel_closes_window(
-        self, taxi_form_opened, waiting_page, completed_page
-    ):
+    def test_full_flow_cancel_closes_window(self, taxi_form_opened, completed_page):
         with allure.step("Выбрать тариф Рабочий"):
             taxi_form_opened.select_tariff_worker()
         with allure.step("Включить чекбокс 'Столик для ноутбука'"):

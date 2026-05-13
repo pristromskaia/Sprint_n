@@ -12,10 +12,6 @@ class TaxiOrderPageLocators:
         ".tcard-title",
     )
 
-    INFO_ICONS = (
-        By.XPATH,
-        "//*[contains(@class,'i-button') and contains(@class,'tcard-i')]",
-    )
     TARIFF_TOOLTIP = (By.CSS_SELECTOR, "div[data-id='tooltip'].show")
 
     FIELD_PHONE = (
@@ -43,7 +39,11 @@ class TaxiOrderPageLocators:
         " | //button[contains(.,'Ввести номер')]",
     )
 
-    ACTIVE_INFO_ICON = (By.CSS_SELECTOR, ".tcard.active .i-button")
+    ACTIVE_INFO_ICON = (
+    By.XPATH,
+    "//div[contains(@class,'tcard') and contains(@class,'active')]"
+    "//*[contains(@class,'i-button')]",
+)
 
     CHECKBOX_LAPTOP_TABLE = (By.CSS_SELECTOR, ".switch .slider")
 

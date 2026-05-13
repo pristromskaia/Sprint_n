@@ -5,7 +5,7 @@ from pages.main_page import MainPage
 from pages.route_page import RoutePage
 from pages.taxi_order_page import TaxiOrderPage
 from pages.order_status_page import WaitingOrderPage, CompletedOrderPage
-import test_data
+from utils import test_data
 
 
 def get_driver():
@@ -19,6 +19,7 @@ def get_driver():
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
     return webdriver.Chrome(options=options)
+
 
 
 @pytest.fixture()
@@ -56,34 +57,37 @@ def completed_page(driver):
 
 
 @pytest.fixture()
-def main_with_two_addresses(driver):
+def opened_main_page(driver):
     main = MainPage(driver)
     main.open(test_data.BASE_URL)
-    main.enter_addresses(test_data.ADDRESS_FROM, test_data.ADDRESS_TO)
     return main
 
 
 @pytest.fixture()
-def main_with_same_address(driver):
-    main = MainPage(driver)
-    main.open(test_data.BASE_URL)
-    main.enter_addresses(test_data.ADDRESS_FROM, test_data.ADDRESS_SAME)
-    return main
+def main_with_two_addresses(opened_main_page):
+    opened_main_page.enter_addresses(
+        test_data.ADDRESS_FROM,
+        test_data.ADDRESS_TO
+    )
+    return opened_main_page
 
 
 @pytest.fixture()
-def route_with_two_addresses(driver):
-    main = MainPage(driver)
-    main.open(test_data.BASE_URL)
-    main.enter_addresses(test_data.ADDRESS_FROM, test_data.ADDRESS_TO)
+def main_with_same_address(opened_main_page):
+    opened_main_page.enter_addresses(
+        test_data.ADDRESS_FROM,
+        test_data.ADDRESS_SAME
+    )
+    return opened_main_page
+
+
+@pytest.fixture()
+def route_with_two_addresses(main_with_two_addresses, driver):
     return RoutePage(driver)
 
 
 @pytest.fixture()
-def taxi_form_opened(driver):
-    main = MainPage(driver)
-    main.open(test_data.BASE_URL)
-    main.enter_addresses(test_data.ADDRESS_FROM, test_data.ADDRESS_TO)
+def taxi_form_opened(route_with_two_addresses, driver):
     route = RoutePage(driver)
     route.click_tab_fast()
     route.click_call_taxi()

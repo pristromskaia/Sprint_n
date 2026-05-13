@@ -11,3 +11,4 @@ class MainPageLocators:
     )
     ROUTE_BLOCK = (By.XPATH, "//*[contains(@class,'result')]")
     POPUP_CLOSE_BTN = (By.CLASS_NAME, "section-close")
+    TAG_NAME = (By.TAG_NAME, "input")

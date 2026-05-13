@@ -1,5 +1,5 @@
 import allure
-import test_data
+from utils import test_data
 
 
 @allure.feature("Отрисовка блока с выбором маршрута")

@@ -5,13 +5,13 @@ from locators.route_page_locators import RoutePageLocators
 class RoutePage(BasePage):
 
     def click_tab_optimal(self):
-        self.find_clickable(RoutePageLocators.TAB_OPTIMAL).click()
+        self.click(RoutePageLocators.TAB_OPTIMAL)
 
     def click_tab_fast(self):
-        self.find_clickable(RoutePageLocators.TAB_FAST).click()
+        self.click(RoutePageLocators.TAB_FAST)
 
     def click_tab_custom(self):
-        self.find_clickable(RoutePageLocators.TAB_CUSTOM).click()
+        self.click(RoutePageLocators.TAB_CUSTOM)
 
     def get_active_tab_text(self):
         return self.get_text(RoutePageLocators.ACTIVE_TAB)
@@ -28,20 +28,14 @@ class RoutePage(BasePage):
 
     def is_book_drive_button_active(self):
         btn = self.find_clickable(RoutePageLocators.BTN_BOOK_DRIVE)
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", btn)
+        self.scroll_to_element(btn)
         return btn.is_enabled() and btn.is_displayed()
-
-    def is_transport_type_displayed(self, transport_locator):
-        return self.is_visible(transport_locator)
 
     def click_transport_drive(self):
         self.click(RoutePageLocators.TRANSPORT_DRIVE)
 
     def click_call_taxi(self):
-        self.find_clickable(RoutePageLocators.BTN_CALL_TAXI).click()
-
-    def click_book_drive(self):
-        self.find_clickable(RoutePageLocators.BTN_BOOK_DRIVE).click()
+        self.click(RoutePageLocators.BTN_CALL_TAXI)
 
     def get_route_cost(self):
         return self.get_text(RoutePageLocators.ROUTE_COST)
